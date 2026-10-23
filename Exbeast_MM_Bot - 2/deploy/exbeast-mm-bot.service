@@ -1,0 +1,24 @@
+# systemd unit for exbeast-mm-bot (Ubuntu / Debian).
+#   sudo cp deploy/exbeast-mm-bot.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now exbeast-mm-bot
+#   journalctl -u exbeast-mm-bot -f
+# On stop (systemctl stop / restart) the bot cancels its orders (MM_CANCEL_ON_EXIT=true).
+[Unit]
+Description=Exbeast market maker bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/Exbeast_MM_Bot
+ExecStart=/usr/bin/env node --env-file=/opt/Exbeast_MM_Bot/.env src/index.js
+Restart=always
+RestartSec=5
+# Time to send its cancel-all before it is killed.
+TimeoutStopSec=20
+KillSignal=SIGTERM
+User=www-data
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

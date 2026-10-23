@@ -1,0 +1,14 @@
+{
+  "name": "exbeast-mm-bot",
+  "version": "1.0.0",
+  "description": "Market maker bot for the Exbeast engine markets, through the open API (signed API keys)",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node --env-file=.env src/index.js",
+    "dry-run": "node --env-file=.env src/index.js --dry-run",
+    "check": "node --env-file=.env src/index.js --check",
+    "test": "node --test test/"
+  }
+}

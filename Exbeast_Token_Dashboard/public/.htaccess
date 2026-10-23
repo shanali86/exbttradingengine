@@ -1,0 +1,16 @@
+# Apache (Hostinger / XAMPP): serve index.html for every app route
+# (/login, /tokens/3/overview, ...) so a page refresh does not 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# index.html must never be cached (it points at the hashed bundles).
+<IfModule mod_headers.c>
+  <Files "index.html">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </Files>
+</IfModule>
